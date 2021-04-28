@@ -9,7 +9,7 @@ from sklearn.preprocessing import MinMaxScaler,normalize
 def test():
     # load model and use weights we saved before.
     model = MyModel()
-    model.load_state_dict(torch.load('0.072model.pth', map_location='cpu'))
+    model.load_state_dict(torch.load('mymodel.pth', map_location='cpu'))
     model.eval()
     # load testing data
     data = pd.read_csv('test.csv', encoding='utf-8')

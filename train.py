@@ -33,7 +33,7 @@ def visualize(record,valid_record, title):
 
 
 # learning rate, epoch and batch size. Can change the parameters here.
-def train(lr=0.001, epoch=10, batch_size=32):
+def train(lr=0.001, epoch=200, batch_size=32):
     train_loss_curve = []
     train_wrmse_curve = []
     valid_loss_curve = []
