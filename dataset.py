@@ -3,7 +3,6 @@ import numpy as np
 from pathlib import Path
 from torch.utils.data import Dataset
 from sklearn.preprocessing import MinMaxScaler,normalize
-from sklearn.impute import SimpleImputer
 
 class MLDataset(Dataset):
     def __init__(self):
@@ -21,16 +20,12 @@ class MLDataset(Dataset):
         # For example, do normalization or dimension Reduction.
         # Some of columns have "nan", need to drop row or fill with value first
         # For example:
-        data = data.fillna(0)
-        imp = SimpleImputer(missing_values=np.nan, strategy='median')
-        
+        data = data.fillna(data.median())
+
         self.label = data[label_col] # (348, 20)
         self.train = data.drop(label_col, axis=1)
-        # self.train = imp.fit_transform(self.train)
         self.train = normalize(self.train,norm='l1')
         self.train = pd.DataFrame(self.train)
-        # print(self.train)
-        # exit(0)
 
         # # training data normalized
         # scaler = MinMaxScaler(feature_range=(-1, 1))  

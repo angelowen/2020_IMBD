@@ -27,3 +27,11 @@ Training WRMSE: 0.1069
 Valid loss: 0.0011
 Valid WRMSE: 0.0957
 Best Validation WRMSE: 0.09570715578782839
+
+fillna 0->median
+Training loss: 0.0010
+Training WRMSE: 0.1051
+Valid loss: 0.0004
+Valid WRMSE: 0.0605
+
+Best Validation WRMSE: 0.051820146485659406

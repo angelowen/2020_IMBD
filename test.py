@@ -23,7 +23,7 @@ def test():
     # ================================================================ #
     # if do some operations with training data,
     # do the same operations to the testing data in this block
-    data = data.fillna(0)
+    data = data.fillna(data.median())
     # testing data normalized
     # scaler = MinMaxScaler(feature_range=(-1, 1))  
     # data = scaler.fit_transform(data)
