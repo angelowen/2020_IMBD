@@ -1,0 +1,29 @@
+teacher
+Epoch: 30/30
+Training loss: 0.0042
+Training WRMSE: 0.3418
+
+relu:
+Training loss: 0.0011
+Training WRMSE: 0.1171
+
+MinMax:
+Training loss: 0.0003
+Training WRMSE: 0.0588
+Valid loss: 0.0008
+Valid WRMSE: 0.0946
+
+L1:
+Training loss: 0.0011
+Training WRMSE: 0.1098
+Valid loss: 0.0007
+Valid WRMSE: 0.0723
+
+Best Validation WRMSE: 0.0722955100666684
+
+L2:
+Training loss: 0.0010
+Training WRMSE: 0.1069
+Valid loss: 0.0011
+Valid WRMSE: 0.0957
+Best Validation WRMSE: 0.09570715578782839
