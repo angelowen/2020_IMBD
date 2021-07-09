@@ -1,15 +1,20 @@
-import torch
+import torch,os
 from pathlib import Path
 import pandas as pd
 from dataset import MLDataset
-from models import MyModel
+from models import DNN,AttModel,ResModel,Transformer
 from sklearn.preprocessing import MinMaxScaler,normalize
-
-
-def test():
+from argparse import ArgumentParser
+from utils import model_builder,clean_file
+def test(path):
     # load model and use weights we saved before.
-    model = MyModel()
-    model.load_state_dict(torch.load('mymodel.pth', map_location='cpu'))
+    model = model_builder(args.model)
+    try:
+        model.load_state_dict(torch.load('mymodel.pth', map_location='cpu'))
+    except:
+        print("Please Remember to change the model name as same as your training model!!",end="\n")
+        print("Exit with no results")
+        return
     model.eval()
     # load testing data
     data = pd.read_csv('test.csv', encoding='utf-8')
@@ -20,19 +25,12 @@ def test():
         'Input_A2_024', 'Input_C_058', 'Input_C_057', 'Input_A3_013', 'Input_A2_017'
     ]
 
-    # ================================================================ #
-    # if do some operations with training data,
-    # do the same operations to the testing data in this block
     data = data.fillna(data.median())
     # testing data normalized
     # scaler = MinMaxScaler(feature_range=(-1, 1))  
     # data = scaler.fit_transform(data)
     data = normalize(data,norm='l1')
     data = pd.DataFrame(data)
-
-
-    # ================================================================ #
-    # convert dataframe to tensor, no need to rewrite
     # input: torch.Size([95, 223]) output: torch.Size([95, 20])
     inputs = data.values
     inputs = torch.tensor(inputs)
@@ -43,7 +41,13 @@ def test():
         tmp = outputs[i].detach().numpy()
         tmp = pd.DataFrame([tmp], columns=label_col)
         result= pd.concat([result, tmp], ignore_index=True)
-    result.to_csv('result.csv', index=False)
+    result.to_csv(path, index=False)
 
 if __name__ == '__main__':
-    test()
+    parser = ArgumentParser()
+    parser.add_argument('--model', type=str,default='dnn',metavar='DNN,AttModel,ResModel,Transformer',
+                        help='choose the model to train(default: DNN)')
+    args = parser.parse_args()
+    path = 'Result.csv'
+    clean_file(path)
+    test(path)
