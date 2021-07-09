@@ -9,11 +9,7 @@
 * 目前最佳 WRMSE = 0.068 file="result0.068.csv" pth-file="0.055model.pth" 
 * (評分檔) = "TestResult.xlsm"
 
-* 待嘗試: 參數初始化問題-pretrain model，缺失值改用 random forest預測, model 改進 && ensambling 嘗試
-
-## Reference
-* [ensembling](https://ithelp.ithome.com.tw/articles/10250317)
-
+* 待嘗試: 參數初始化問題-pretrain model，缺失值test.csv預測,data augmentation load .pth, model 改進 && ensambling 嘗試
 
 ## Usage
 * python train.py 有4種model選擇，測試時模型名稱記得一同更改
@@ -28,3 +24,6 @@
     * huber loss
     * MSE loss
     * L1 loss
+
+## Reference
+* [ensembling](https://ithelp.ithome.com.tw/articles/10250317)
