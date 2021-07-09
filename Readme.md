@@ -13,7 +13,7 @@
 
 ## Usage
 * python train.py 有4種model選擇，測試時模型名稱記得一同更改
-    * DNN
+    * DNN(default)
     * ResModel
     * AttModel
     * Transformer
@@ -21,9 +21,10 @@
 * `data_aug` 參數用autoencoder 增加資料量
 * `--tensorboard` 參數可選擇是否使用tensorboard紀錄
 * `--criterion` 參數可選擇3種loss function
-    * huber loss
+    * huber loss(default)
     * MSE loss
     * L1 loss
+* `--scheduler` 啟用optim.lr_scheduler.MultiStepLR 和 optim.lr_scheduler.StepLR
 
 ## Reference
 * [ensembling](https://ithelp.ithome.com.tw/articles/10250317)
