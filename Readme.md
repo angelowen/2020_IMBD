@@ -16,8 +16,15 @@
 
 
 ## Usage
-* python train.py 有4種model選擇[Mymodel,ResModel,Seq2Seq,Transformer]，測試時模型名稱記得一同更改
+* python train.py 有4種model選擇，測試時模型名稱記得一同更改
+    * DNN
+    * ResModel
+    * AttModel
+    * Transformer
 * 可使用 `fillna` 參數(kneighborsregressor方法)補值
 * `data_aug` 參數用autoencoder 增加資料量
 * `--tensorboard` 參數可選擇是否使用tensorboard紀錄
-* `--criterion` 參數可選擇3種loss function[huber loss,MSE loss, L1 loss]
+* `--criterion` 參數可選擇3種loss function
+    * huber loss
+    * MSE loss
+    * L1 loss
