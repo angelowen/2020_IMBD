@@ -6,11 +6,22 @@ from models import DNN,AttModel,ResModel,Transformer
 from sklearn.preprocessing import MinMaxScaler,normalize
 from argparse import ArgumentParser
 from utils import model_builder,clean_file
-def test(path):
+def find_log():
+    if  os.path.isdir('log'):
+        log_dir = [int(i[3:]) for i in os.listdir('log')]
+        n = max(log_dir)
+        name = f"log{n}"
+    else:
+        name="output"
+    print(f"load model in ./log/{name}")
+    return f"./log/{name}/mymodel.pth"
+
+def test(args,path):
     # load model and use weights we saved before.
     model = model_builder(args.model)
+    pth_file = find_log()
     try:
-        model.load_state_dict(torch.load('mymodel.pth', map_location='cpu'))
+        model.load_state_dict(torch.load(pth_file, map_location='cpu'))
     except:
         print("Please Remember to change the model name as same as your training model!!",end="\n")
         print("Exit with no results")
@@ -43,6 +54,8 @@ def test(path):
         result= pd.concat([result, tmp], ignore_index=True)
     result.to_csv(path, index=False)
 
+
+
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('--model', type=str,default='dnn',metavar='DNN,AttModel,ResModel,Transformer',
@@ -50,4 +63,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
     path = 'Result.csv'
     clean_file(path)
-    test(path)
+    test(args,path)
+        

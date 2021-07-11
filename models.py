@@ -1,45 +1,33 @@
 import torch.nn as nn
 import torch
 from torch.autograd import Variable
-
 class DNN(nn.Module):
     def __init__(self):
-        super(DNN, self).__init__()
-        self.rnn = nn.LSTM(
-            input_size=223, 
-            hidden_size=20, 
-            num_layers=1,
-            batch_first=True)
-        self.block  = nn.Sequential(
-            nn.AdaptiveAvgPool1d(512), # 在由多個輸入平面組成的輸入信號上應用一維自適應平均池化。        
-            nn.GRU(512, 512, num_layers=2),
-        )
+        super(DNN, self).__init__()      
         self.nn_layers = nn.Sequential(
             nn.Linear(in_features=223, out_features=4096),
-            nn.LeakyReLU(True),
+            nn.LeakyReLU(),
             nn.Dropout(),
             nn.Linear(in_features=4096, out_features=2048),
-            nn.LeakyReLU(True),
+            nn.LeakyReLU(),
             nn.Dropout(),
             nn.Linear(in_features=2048, out_features=1024),
-            nn.LeakyReLU(True),
+            nn.LeakyReLU(),
             nn.Dropout(),
             nn.Linear(in_features=1024, out_features=512),
-            nn.LeakyReLU(True),
+            nn.LeakyReLU(),
             nn.Dropout(),
             nn.Linear(in_features=512, out_features=512),
-            nn.LeakyReLU(True),
+            nn.LeakyReLU(),
             nn.Dropout(),
             nn.Linear(in_features=512, out_features=20),
         )
     def forward(self, x):
         # input:   torch.Size([32, 223])
         # output:  torch.Size([32, 20])
-        # x = self.block(x.unsqueeze(0))
-        ## Lstm
-            # x,_ = self.rnn(x.unsqueeze(0))
         x = self.nn_layers(x)
         return x
+
 class AttModel(nn.Module):
     def __init__(self):
         super(AttModel, self).__init__()

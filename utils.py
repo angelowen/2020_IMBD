@@ -40,26 +40,21 @@ def criterion_builder(criterion='huber', **kwargs):
         'huber': nn.SmoothL1Loss(**kwargs),
     }[criterion.lower()]
 
-def schedule_builder(optimizer, lr_method='step', step=2, gamma=0.1):
+def schedule_builder(optimizer,epochs, lr_method='cosine'):
     """declare scheduler
     Args:
         optimizer : parameter of lr_scheduler 
-        lr_method (str, optional): choose which scheduler to be used. Defaults to 'step'.
-            step: step or multiple step
-        step (int, optional): set step size. Defaults to 2 (epoch).
-        gamma (float, optional): decrease factor. Defaults to 0.1.
+        lr_method (str, optional): choose which scheduler to be used. Defaults to 'cosine'.
     Returns:
         torch.optmizer.lr_sceduler
     """
-    
+    def poly_lr_scheduler(epoch, num_epochs=epochs, power=0.9):
+        return (1 - epoch/num_epochs)**power
 
-    if lr_method == 'step' or lr_method is True:
-        if type(step) is list and len(step) > 1:
-            step = [int(x) for x in step]
-            scheduler = optim.lr_scheduler.MultiStepLR(optimizer, step, gamma)
-        else:
-            step = step.pop() if type(step) is list else step
-            scheduler = optim.lr_scheduler.StepLR(optimizer, step, gamma)
+    if lr_method == 'cosine':
+        scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,epochs)
+    elif lr_method == 'lambdalr':
+        scheduler = optim.lr_scheduler.LambdaLR(optimizer=optimizer, lr_lambda=poly_lr_scheduler)
 
     return scheduler
 

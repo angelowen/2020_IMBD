@@ -21,8 +21,17 @@ def visualize(record,valid_record, title):
 
 # learning rate, epoch and batch size. Can change the parameters here.
 def data_aug(data, lr=0.001, epoch=800, batch_size=128):
-    save_path = 'data_augment.csv'
+    folder = 'data_aug'
+    save_path = f'{folder}/data_augment.csv'
     clean_file(save_path)
+    store_e = [700,750,800]
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    else:
+        for i in store_e:
+            result = test(data,folder,i)
+        return result
+
     train_loss_curve = []
     valid_loss_curve = []
     # load model
@@ -75,10 +84,10 @@ def data_aug(data, lr=0.001, epoch=800, batch_size=128):
         # if valid_loss_epoch < best :
         #     best = valid_loss_epoch
         #     torch.save(model.state_dict(), 'data_aug.pth')
-        if e in [700,750,800]:
-            torch.save(model.state_dict(), 'data_aug.pth')
+        if e in store_e:
+            torch.save(model.state_dict(), f'{folder}/ep{e}data_aug.pth')
             print(f"training in epoch  {e},start augment data!!")
-            result = test(data,save_path)
+            result = test(data,folder,e)
         print(f'Training loss: {loss_epoch:.4f}')
         print(f'Valid loss: {valid_loss_epoch:.4f}')
         # save loss  every epoch
@@ -88,11 +97,11 @@ def data_aug(data, lr=0.001, epoch=800, batch_size=128):
     # visualize(train_loss_curve,valid_loss_curve, 'Data Augmentation')
     return result
 
-def test(data,save_path):
+def test(data,folder,e):
     label_col = list(data.columns)
     result = data
     model = AE()
-    model.load_state_dict(torch.load('data_aug.pth', map_location='cpu'))
+    model.load_state_dict(torch.load(f'{folder}/ep{e}data_aug.pth', map_location='cpu'))
     model.eval()
     dataset = AEDataset(data)
     dataloader = DataLoader(dataset=dataset, batch_size=128, shuffle=False)
@@ -102,7 +111,7 @@ def test(data,save_path):
             tmp = outputs[i].detach().numpy()
             tmp = pd.DataFrame([tmp], columns=label_col)
             result= pd.concat([result, tmp], ignore_index=True)
-    result.to_csv(save_path,mode='a', header=True, index=False)
+    result.to_csv(f'{folder}/data_augment.csv',mode='a', header=True, index=False)
     return result
 
 if __name__ == '__main__':
