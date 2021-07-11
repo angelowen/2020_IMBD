@@ -3,3 +3,5 @@
 FillNan_X.py
 FillNan_1.py
 model2.py
+log/
+data_aug/
