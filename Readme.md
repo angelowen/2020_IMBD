@@ -12,12 +12,13 @@
 * 待嘗試: 參數初始化問題-pretrain model，缺失值test.csv預測, model 改進 && ensambling 嘗試
 
 ## Usage
-Suggested command `python train.py --fillna --scheduler --data_aug`
-* python train.py 有4種model選擇，測試時模型名稱記得一同更改
+### Training
+`python train.py [--model XXX] [--fillna] [--scheduler] [--data_aug] [--criterion XXX]`
+* 有4種model選擇，測試時模型名稱記得一同更改
     * DNN(default)
     * ResModel(better)
-    * AttModel
-    * Transformer
+    * AttModel(bad)
+    * Transformer(bad)
 * 可使用 `fillna` 參數(kneighborsregressor方法)補值,default data.median()
 * `data_aug` 參數用autoencoder 增加資料量
 * `--tensorboard` 參數可選擇是否使用tensorboard紀錄,defalt = True in line 187
@@ -26,6 +27,7 @@ Suggested command `python train.py --fillna --scheduler --data_aug`
     * MSE loss
     * L1 loss
 * `--scheduler` 啟用optim.lr_scheduler.cosineannealing , default lr=0.001
-
+### Testing
+`python test.py [--model] XXX`
 ## Reference
 * [ensembling](https://ithelp.ithome.com.tw/articles/10250317)
