@@ -5,7 +5,7 @@ from dataset import MLDataset
 from models import DNN,AttModel,ResModel,Transformer
 from sklearn.preprocessing import MinMaxScaler,normalize
 from argparse import ArgumentParser
-from utils import model_builder,clean_file
+from utils import model_builder,clean_file,FILLNA
 def find_log():
     if  os.path.isdir('log'):
         log_dir = [int(i[3:]) for i in os.listdir('log')]
@@ -35,7 +35,7 @@ def test(args,path):
         'Input_A1_020', 'Input_A6_011', 'Input_A3_015', 'Input_C_046', 'Input_C_049',
         'Input_A2_024', 'Input_C_058', 'Input_C_057', 'Input_A3_013', 'Input_A2_017'
     ]
-
+    data = FILLNA('test.csv')
     data = data.fillna(data.median())
     # testing data normalized
     # scaler = MinMaxScaler(feature_range=(-1, 1))  

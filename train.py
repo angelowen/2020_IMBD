@@ -49,7 +49,7 @@ def train(args,writer):
     data = pd.read_csv('train.csv', encoding='utf-8')
     if args.fillna:
         print("fill nan with K!!")
-        data = FILLNA()
+        data = FILLNA('train.csv')
     if args.data_aug:
         from data_augment import data_aug
         print("It may cost time!!")

@@ -58,11 +58,11 @@ def schedule_builder(optimizer,epochs, lr_method='cosine'):
 
     return scheduler
 
-def FILLNA():
+def FILLNA(file):
     """
     Fill nan in trainl.csv
     """
-    data = pd.read_csv('train.csv', encoding='utf-8')
+    data = pd.read_csv(file, encoding='utf-8')
     col = data.columns
     # find NaN
     is_NaN = data.isnull()
