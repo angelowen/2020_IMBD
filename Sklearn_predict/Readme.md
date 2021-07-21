@@ -13,9 +13,9 @@
 
 Copy the answer in either file above ,then paste them on `TestResult.xlsm` to watch your final scores
 
-> stacking 0.0590 < 0.78(baseline) 
+**Stacking** 0.0590 < 0.78(baseline) 
 
-> ensemble 0.060 < 0.78(baseline)
+**Ensembling** 0.060 < 0.78(baseline)
 
 ## Reference
 1. [Boosting & Stacking 實戰1](https://ithelp.ithome.com.tw/articles/10227446)
